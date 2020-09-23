@@ -8,7 +8,7 @@
   </router-link>
   <h1>List of Users</h1>
   
-  <v-card color=#fefefe :outline="true" :raised="true" v-for="user in users" :key="user.username">
+  <v-card color=#fefefe :outline="true" :raised="true" v-for="user in users.slice(0,30)" :key="user.id">
     <v-layout row wrap :class="`pa-3 project ${user.username}`">
       <v-flex xs2 sm2 md2>
         <div class="caption grey--text" align="center">Name</div>

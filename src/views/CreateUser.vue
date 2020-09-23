@@ -77,21 +77,20 @@
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                  <v-text-field prepend-icon="person" label="FirstName" name="firstname" type="text"></v-text-field>
-                  <v-text-field prepend-icon="person" label="LastName" name="lastname" type="text"></v-text-field>
-                  <v-text-field prepend-icon="email" label="Email Address" name="email" type="text"></v-text-field>
-                  <v-text-field prepend-icon="lock" label="Password" name="password" type="password"></v-text-field>
-                  <v-text-field prepend-icon="lock" label="Confirm Password" name="cpassword" type="password"></v-text-field>
-                  <v-text-field prepend-icon="person" label="username" name="username" type="text"></v-text-field>
+                  <v-text-field prepend-icon="person" label="FirstName" v-model="firstname" type="text"></v-text-field>
+                  <v-text-field prepend-icon="person" label="LastName" v-model="lastname" type="text"></v-text-field>
+                  <v-text-field prepend-icon="email" label="Email Address" v-model="email" type="text"></v-text-field>
+                  <v-text-field prepend-icon="lock" label="Password" v-model="password" type="password"></v-text-field>
+                  <v-text-field prepend-icon="lock" label="Confirm Password" v-model="cpassword" type="password"></v-text-field>
+                  <v-text-field prepend-icon="person" label="username" v-model="username" type="text"></v-text-field>
                   <v-select prepend-icon="group"
-                            v-model="select"
                       :items="groups"
                       :rules="[v => !!v || 'Group is required']"
                       label="Group"
-                            name="user_group"
+                            v-model="user_group"
                       required
                   ></v-select>
-                  <v-text-field prepend-icon="phone" label="Phone Number" name="phone" type="varchar"></v-text-field>
+                  <v-text-field prepend-icon="phone" label="Phone Number" v-model="phone" type="varchar"></v-text-field>
                 </v-form>
               </v-card-text>
               <v-card-actions>
@@ -109,27 +108,55 @@
 import axios from 'axios';
 export default {
   name: "CreateUser",
-  data: () => ({
-    valid: true,
-    name: '',
-    nameRules: [
-      v => !!v || 'Name is required',
-      v => (v && v.length <= 10) || 'Name must be less than 10 characters',
-    ],
-    email: '',
-    emailRules: [
-      v => !!v || 'E-mail is required',
-      v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-    ],
-    select: null,
-    groups: [
-      'admin',
-      'general',
-      'supervisor'
-    ],
-    checkbox: false,
-    lazy: false,
-  }),
+  data: function () {
+    return {
+      postData: {
+        firstname: undefined,
+        lastname: undefined,
+        email: undefined,
+      },
+      valid: true,
+      name: '',
+      nameRules: [
+        v => !!v || 'Name is required',
+        v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+      ],
+      email: '',
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      ],
+      select: null,
+      groups: [
+        'general',
+        'supervisor',
+        'admin'
+      ],
+      checkbox: false,
+      lazy: false,
+    }
+  },
+  // data: () => ({
+  //   valid: true,
+  //   name: '',
+  //   nameRules: [
+  //     v => !!v || 'Name is required',
+  //     v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+  //   ],
+  //   email: '',
+  //   emailRules: [
+  //     v => !!v || 'E-mail is required',
+  //     v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+  //   ],
+  //   select: null,
+  //   groups: [
+  //     'admin',
+  //     'general',
+  //     'supervisor'
+  //   ],
+  //   checkbox: false,
+  //   lazy: false,
+  // }),
   methods:{
     createUser(){
       axios({

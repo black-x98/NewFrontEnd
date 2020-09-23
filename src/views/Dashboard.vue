@@ -11,7 +11,7 @@
           <v-container fluid  max-width="180" >
 
             <v-card-text v-if="n==1">
-              <v-card color=#fefefe :outline="true" :raised="true" v-for="req in requests.slice(0,20)" :key="req.name">
+              <v-card color=#fefefe :outline="true" :raised="true" v-for="req in requests.slice(0,30)" :key="req.id">
                 <v-layout row wrap :class="`pa-1 project ${req.name}`">
                   <v-flex xs2 sm2 md2>
                     <div class="caption grey--text" align="center">Product Name</div>
@@ -41,8 +41,8 @@
               </v-card>
             </v-card-text>
 
-            <v-card-text v-if="n==4">
-              <v-card color=#fefefe :outline="true" :raised="true" v-for="req in requests.slice(0,20)" :key="req.name">
+            <v-card-text v-if="n==2">
+              <v-card color=#fefefe :outline="true" :raised="true" v-for="req in requests.slice(0,30)" :key="req.id">
                 <div v-if="req.status=='pending'" >
                   <v-layout row wrap :class="`pa-1 project ${req.name}`">
                     <v-flex xs2 sm2 md2>
@@ -74,7 +74,7 @@
               </v-card>
             </v-card-text>
 
-            <v-card-text v-if="n==2"><v-card color=#fefefe :outline="true" :raised="true" v-for="req in requests.slice(0,20)" :key="req.name">
+            <v-card-text v-if="n==3"><v-card color=#fefefe :outline="true" :raised="true" v-for="req in requests.slice(0,30)" :key="req.id">
               <div v-if="req.status=='accepted'" >
                 <v-layout row wrap :class="`pa-3 project ${req.qr_code}`">
                   <v-flex xs2 sm2 md2>
@@ -106,7 +106,7 @@
             </v-card>
             </v-card-text>
 
-            <v-card-text v-if="n==3"><v-card color=#fefefe :outline="true" :raised="true" v-for="req in requests.slice(0,20)" :key="req.name">
+            <v-card-text v-if="n==4"><v-card color=#fefefe :outline="true" :raised="true" v-for="req in requests.slice(0,30)" :key="req.id">
               <div v-if="req.status=='rejected'" >
                 <v-layout row wrap :class="`pa-3 project ${req.qr_code}`">
                   <v-flex xs2 sm2 md2>

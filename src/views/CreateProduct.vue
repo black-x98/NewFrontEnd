@@ -1,7 +1,6 @@
 
 <template>
   <v-app id="inspire">
-    <v-main>
       <v-container class="v-picker--full-width" fluid>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="4">
@@ -12,49 +11,78 @@
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                  <v-text-field label="Product name" name="product_name" prepend-icon="mdi-account" type="text"></v-text-field>
-                  <v-text-field label="QR Code" name="sku" prepend-icon="mdi-lock" type="text"></v-text-field>
-                  <v-text-field label="Price" name="price" prepend-icon="mdi-lock" type="number"></v-text-field>
-                  <v-text-field label="Quantity" name="qty" prepend-icon="mdi-lock" type="number"></v-text-field>
+                  <v-text-field label="Product name" v-model="postData.product_name" prepend-icon="mdi-account" type="text"></v-text-field>
+                  <v-text-field label="QR Code" v-model="postData.sku" prepend-icon="mdi-lock" type="text"></v-text-field>
+                  <v-text-field label="Price" v-model="postData.price" prepend-icon="mdi-lock" type="number"></v-text-field>
+                  <v-text-field label="Quantity" v-model="postData.qty" prepend-icon="mdi-lock" type="number"></v-text-field>
+<!--                  <v-text-field label="Request Type" v-model="postData.req_type" prepend-icon="mdi-lock"></v-text-field>-->
+                  <v-select prepend-icon="group"
+                            :items="req_types"
+                            :rules="[v => !!v || 'Group is required']"
+                            label="Group"
+                            v-model="postData.req_type"
+                            required
+                  ></v-select>
                 </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" v-on:click.native="submitData">Create Product</v-btn>
+                <v-btn color="primary" v-on:click.native="createProduct">Create Product</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
       </v-container>
-    </v-main>
   </v-app>
 </template>
 
 <script>
 import axios from 'axios';
+
 export default {
   name: "CreateProduct",
   data(){
     return {
-      post:{
-        product_name: '',
-        sku: '',
-        price: '',
-        qty: '',
-      }
+      postData:{
+        product_name: undefined,
+        sku: undefined,
+        price: undefined,
+        qty: undefined,
+        req_type: undefined,
+        status: "pending"
+      },
+      req_types: [
+        'check-in',
+        'check-out'
+      ],
     }
   },
   methods:{
     createProduct(){
-      axios.post('http://localhost/stock/api/assets/')
-          .then()
+      const myData = new FormData();
+      myData.append('product_name', this.postData.product_name)
+      myData.append('sku', this.postData.sku)
+      myData.append('price', this.postData.price)
+      myData.append('qty', this.postData.qty)
+      myData.append('request_type', this.postData.req_type)
+      myData.append('status', this.postData.status)
+      console.log("Inside CREATE PRODUCT function");
+      return axios('http://localhost/stock/api/assets/', {
+        method: 'POST',
+        data: myData,
+        mode: 'no-cors',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+        },
+      })
+          .then(response => {
+            this.products = response.data
+            this.$router.push('/products');
+          })
           .catch(error => {
-        console.log(error);
-      });
-    },
-    submitData(e){
-      console.warn(this.post)
-      e.preventDefault();
+            console.log(error);
+          });
     }
   }
 }

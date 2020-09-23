@@ -12,7 +12,7 @@
 
   <h1>List of Products</h1>
 
-  <v-card color=#fefefe v-for="product in products" :key="product.name">
+  <v-card color=#fefefe v-for="product in products.slice(0,30)" :key="product.id">
     <v-layout row wrap :class="`pa-3 project ${product.name}`">
       <v-flex xs2 sm2 md2>
         <div class="caption grey--text" align="center">Product Name</div>
