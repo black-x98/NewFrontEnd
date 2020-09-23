@@ -11,15 +11,15 @@
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                  <v-text-field label="Product name" v-model="postData.product_name" prepend-icon="mdi-account" type="text"></v-text-field>
+                  <v-text-field label="Product name" v-model="postData.product_name" prepend-icon="object" type="text"></v-text-field>
                   <v-text-field label="QR Code" v-model="postData.sku" prepend-icon="mdi-lock" type="text"></v-text-field>
                   <v-text-field label="Price" v-model="postData.price" prepend-icon="mdi-lock" type="number"></v-text-field>
-                  <v-text-field label="Quantity" v-model="postData.qty" prepend-icon="mdi-lock" type="number"></v-text-field>
+                  <v-text-field  label="Quantity" v-model="postData.qty" prepend-icon="mdi-lock" type="number"></v-text-field>
 <!--                  <v-text-field label="Request Type" v-model="postData.req_type" prepend-icon="mdi-lock"></v-text-field>-->
-                  <v-select prepend-icon="group"
+                  <v-select prepend-icon="none"
                             :items="req_types"
-                            :rules="[v => !!v || 'Group is required']"
-                            label="Group"
+                            :rules="[v => !!v || 'Request type is required']"
+                            label="Request Type"
                             v-model="postData.req_type"
                             required
                   ></v-select>
@@ -66,7 +66,7 @@ export default {
       myData.append('qty', this.postData.qty)
       myData.append('request_type', this.postData.req_type)
       myData.append('status', this.postData.status)
-      console.log("Inside CREATE PRODUCT function");
+
       return axios('http://localhost/stock/api/assets/', {
         method: 'POST',
         data: myData,
