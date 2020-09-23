@@ -96,6 +96,7 @@ export default {
       }).then(response =>
         {
           console.log(response);
+          this.$router.push('/users');
       }).catch(error => {
         console.log(error);
       });
